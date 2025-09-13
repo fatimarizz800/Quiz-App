@@ -44,31 +44,39 @@ var questions = [
         ],
         correctAns: "Read Only Memory",
     },
-    {
-        question: "RAM Stands For _________",
-        options: ["Read Only Memory", "Dom", "Random Acccess Memory", "For Pc"],
-        correctAns: "Random Acccess Memory",
-    },
 ]
 
-var currentQuestion=document.getElementById("currentQuestion")
-var totalQuestion=document.getElementById("totalQueston")
-var currentIndex= 0
-var question=document.getElementById("question")
-var option=document.getElementById("answerbutton")
-
+var currentQuestion = document.getElementById("currentQuestion")
+var totalQuestion = document.getElementById("totalQueston")
+var currentIndex = 0
+var question = document.getElementById("question")
+var option = document.getElementById("answerbutton")
+var score = 0
 function ShowQuestion() {
-    currentQuestion.innerHTML=currentIndex + 1
-    totalQuestion.innerHTML=questions.length
-    question.innerHTML=questions[currentIndex].question
-    for (var i=0; i<questions[currentIndex].options.length;i++) {
-        option.innerHTML +=`<button class="btn">${questions[currentIndex].options[i]}</button>`
+    currentQuestion.innerHTML = currentIndex + 1
+    totalQuestion.innerHTML = questions.length
+    question.innerHTML = questions[currentIndex].question
+    for (var i = 0; i < questions[currentIndex].options.length; i++) {
+        option.innerHTML += `<button class="btn" onclick="CheckAnswer('${questions[currentIndex].options[i]}','${questions[currentIndex].correctAns}')">${questions[currentIndex].options[i]}</button>`
     }
 }
 ShowQuestion()
 function Nextbtn() {
-    option.innerHTML=""
-currentIndex=currentIndex + 1 
-ShowQuestion()
+    if (currentIndex == questions.length - 1) {
+        alert(`final score ${score}/${questions.length}`)
+        currentIndex = 0
+    } else {
+        currentIndex = currentIndex + 1
+    }
 
+    option.innerHTML = ""
+    ShowQuestion()
+
+}
+
+function CheckAnswer(userAns, correctAns) {
+    if (userAns == correctAns) {
+        score++
+    }
+    Nextbtn()
 }
