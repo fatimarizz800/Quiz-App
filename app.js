@@ -52,6 +52,9 @@ var currentIndex = 0
 var question = document.getElementById("question")
 var option = document.getElementById("answerbutton")
 var score = 0
+var app = document.getElementById("app")
+var resultScreen = document.getElementById("resultScreen")
+
 function ShowQuestion() {
     currentQuestion.innerHTML = currentIndex + 1
     totalQuestion.innerHTML = questions.length
@@ -63,15 +66,24 @@ function ShowQuestion() {
 ShowQuestion()
 function Nextbtn() {
     if (currentIndex == questions.length - 1) {
-        alert(`final score ${score}/${questions.length}`)
-        currentIndex = 0
+        var result = `<div class="app">
+        <h1 class="heading">Result</h1>
+        <p class="result">Total Questions:${questions.length}</p>
+        <p class="result">Correct Answers :${score}</p>
+        <p class="result">Wrong Answers:${questions.length - score}</p>
+        <p class="result">Starting Again......</p>
+        </div>`
+        resultScreen.innerHTML = result
+        app.style.display = 'none'
+        setTimeout(() => {
+            Restart()
+        }, 3000);
+
     } else {
         currentIndex = currentIndex + 1
+        option.innerHTML = ""
+        ShowQuestion()
     }
-
-    option.innerHTML = ""
-    ShowQuestion()
-
 }
 
 function CheckAnswer(userAns, correctAns) {
@@ -79,4 +91,12 @@ function CheckAnswer(userAns, correctAns) {
         score++
     }
     Nextbtn()
+}
+
+function Restart() {
+    app.style.display = 'block'
+    currentIndex = 0
+    score = 0
+    option.innerHTML = ""
+    ShowQuestion()
 }
